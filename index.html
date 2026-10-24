@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b17">
+<title>VIP Bonus Calculator | BonusHub</title>
+<style>
+:root{--bg:#090b17;--surface:#111528;--surface2:#171c32;--line:#2a3150;--txt:#f7f8ff;--muted:#aab2cf;--purple:#9a5cff;--purple2:#6f35ef;--green:#2ce6a0;--blue:#61c8ff;--gold:#ffca68;--red:#ff6b7b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--txt);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(ellipse at 50% -20%,#34205f 0,transparent 43%),radial-gradient(ellipse at 100% 50%,#10244b 0,transparent 30%),var(--bg)}
+button,input,select{font:inherit}button{cursor:pointer;transition:transform .16s,filter .16s,box-shadow .16s}button:hover{filter:brightness(1.12);transform:translateY(-1px)}button:active{transform:translateY(0)}
+.top{position:sticky;top:0;z-index:9;background:#090b17eF;border-bottom:1px solid #252b46;backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px clamp(14px,3vw,38px)}
+.brand{display:flex;align-items:center;gap:11px;font-size:22px;font-weight:900;letter-spacing:-.5px;white-space:nowrap}.mark{width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(140deg,#c18bff,#702eff);box-shadow:0 0 28px #8c4cff55;font-size:24px}.brand em{font-style:normal;color:#b68aff}.brand small{display:block;color:var(--muted);font-size:11px;font-weight:500;letter-spacing:.4px;margin-top:-3px}
+nav{display:flex;gap:6px;align-items:center;flex-wrap:wrap}nav a{color:#cbd3ee;text-decoration:none;padding:9px 12px;border-radius:9px;font-size:13px}nav a:hover,nav a:first-child{background:#292044;color:#fff}.top-actions{display:flex;gap:8px}
+.btn{border:0;border-radius:10px;padding:11px 16px;font-weight:800;color:#fff;background:linear-gradient(110deg,#b34cff,#7030f5);box-shadow:0 7px 20px #7536f033}.btn.secondary{background:#171e35;border:1px solid #3a456b;box-shadow:none}.btn.green{background:linear-gradient(110deg,#37edb0,#11b97f);color:#06271c;box-shadow:0 7px 20px #15d99524}.btn.gold{background:linear-gradient(110deg,#ffe08b,#ffae3d);color:#3b2607;box-shadow:0 7px 20px #ffb94320}.btn.full{width:100%}
+.wrap{width:min(1360px,100%);margin:auto;padding:26px clamp(13px,2.6vw,34px) 0}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:26px;align-items:center;margin:6px 0 24px}.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid #4b3974;background:#211637;color:#d9c6ff;border-radius:99px;padding:6px 11px;font-size:12px;font-weight:800}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}
+h1{font-size:clamp(35px,5vw,62px);line-height:1.03;letter-spacing:-2px;margin:16px 0 12px}.shine{background:linear-gradient(95deg,#fff 5%,#c99cff 52%,#7edfff);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{color:#bac4e1;max-width:620px;margin:0 0 18px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap}.hero-visual{border:1px solid #40315f;border-radius:20px;background:linear-gradient(145deg,#21173b,#11172b 70%);padding:20px;box-shadow:0 22px 60px #0003;position:relative;overflow:hidden}.hero-visual:after{content:"";position:absolute;width:200px;height:200px;border-radius:50%;background:#8e42ff18;right:-55px;top:-65px}.visual-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.visual-top b{font-size:18px}.pill{background:#123b32;color:#6ff0bd;border:1px solid #1e795b;padding:5px 9px;border-radius:99px;font-size:11px;font-weight:800}.visual-number{font-size:clamp(28px,4vw,43px);font-weight:900;letter-spacing:-1px;margin:18px 0 2px}.visual-number span{color:var(--green)}.visual-bar{height:9px;background:#2a304b;border-radius:99px;overflow:hidden;margin:15px 0}.visual-bar span{display:block;width:72%;height:100%;background:linear-gradient(90deg,#8240ff,#53d7ff);border-radius:99px}.visual-bottom{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:20px 0 13px}.section-head h2{font-size:23px;letter-spacing:-.5px;margin:0}.section-head p{color:var(--muted);font-size:13px;margin:3px 0 0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{min-width:0;background:linear-gradient(150deg,#151a30,#0f1324);border:1px solid var(--line);border-radius:16px;padding:19px;box-shadow:0 12px 32px #00000014}.card-head{display:flex;align-items:center;gap:11px;margin-bottom:18px}.ico{width:43px;height:43px;display:grid;place-items:center;border-radius:13px;background:#2b2047;color:#d5b4ff;font-size:22px}.card h3{font-size:17px;margin:0}.card-head p{font-size:12px;color:var(--muted);margin:2px 0 0}
+label{display:block;color:#c4cce5;font-size:12px;font-weight:700;margin:0 0 7px}input,select{width:100%;min-width:0;background:#0b1020;color:#f7f8ff;border:1px solid #374061;border-radius:10px;padding:12px 13px;outline:none}input:focus,select:focus{border-color:#a16bff;box-shadow:0 0 0 3px #9c5bff1c}.fields{display:grid;grid-template-columns:1fr 1fr;gap:11px}.field{margin-bottom:13px}.output{background:#0a1020;border:1px solid #252d49;border-radius:12px;padding:13px;margin:8px 0 14px}.out-row{display:flex;justify-content:space-between;gap:12px;padding:4px 0;color:#c7d0ea;font-size:13px}.out-row strong{color:#fff;text-align:right}.out-row.primary{border-bottom:1px solid #242b45;padding-bottom:10px;margin-bottom:5px;font-size:14px}.out-row.primary strong{color:var(--green);font-size:17px}.card.weekly .ico{background:#102e48;color:var(--blue)}.card.weekly .out-row.primary strong{color:var(--blue)}.card.monthly .ico{background:#3b2b18;color:var(--gold)}.card.monthly .out-row.primary strong{color:var(--gold)}.card .btn-row{display:flex;gap:9px}.card .btn-row button{flex:1}
+.codes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}.code-card{display:flex;align-items:center;gap:15px;border-radius:15px;padding:17px;border:1px solid #1d8c70;background:linear-gradient(120deg,#082c2b,#101a2b)}.code-card.roobet{border-color:#8544b8;background:linear-gradient(120deg,#28152f,#12172b)}.code-icon{font-size:35px}.code-main{min-width:0;flex:1}.code-main h3{margin:0 0 3px;font-size:18px}.code-main p{margin:0;color:var(--muted);font-size:12px}.code-copy{display:flex;gap:7px;margin-top:10px}.code-copy code{display:block;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:9px 10px;border:1px dashed #5fcbb1;border-radius:8px;color:#d7fff2;font-weight:800;font-family:inherit}.roobet .code-copy code{border-color:#bd7be6;color:#f4ddff}.code-copy button{padding:9px 13px}
+.lower{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:22px}.ref-card{background:linear-gradient(140deg,#21143c,#11162b);border-color:#5d3b92}.ref-input{display:flex;gap:9px;margin:14px 0}.ref-input input{flex:1}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.step{border:1px solid #343b5d;background:#11182d;border-radius:11px;padding:12px}.step span{display:inline-grid;place-items:center;width:29px;height:29px;border-radius:50%;background:#873eff;font-weight:900;margin-bottom:8px}.step b{display:block;font-size:13px}.step small{color:var(--muted);font-size:11px}.checklist{padding:0;margin:0;list-style:none;display:grid;gap:9px;color:#cbd4ed;font-size:13px}.checklist li:before{content:"✓";color:var(--green);font-weight:900;margin-right:10px}.disclaimer{border:1px solid #665025;background:#211b12;color:#e9d5a6;border-radius:12px;padding:13px 15px;margin-top:18px;font-size:12px}.footer{border-top:1px solid #222a45;margin-top:26px;padding:18px clamp(14px,3vw,38px);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#9da9c8;font-size:12px}.footer b{color:#ff7584}.toast{position:fixed;right:18px;bottom:18px;background:#18213a;border:1px solid #4d5c86;color:white;padding:12px 17px;border-radius:12px;z-index:30;display:none;box-shadow:0 10px 35px #0008}.modal{position:fixed;inset:0;z-index:20;display:none;place-items:center;padding:16px;background:#02040bcc;backdrop-filter:blur(7px)}.modal-box{width:min(420px,100%);background:#11172b;border:1px solid #4d3c76;border-radius:17px;padding:22px;box-shadow:0 30px 90px #0009}.modal-box h2{margin:0 0 6px}.modal-box .x{float:right;padding:5px 10px}.small{font-size:12px;color:var(--muted)}.hide{display:none!important}
+@media(max-width:1000px){.top{flex-wrap:wrap}.top nav{order:3;width:100%;overflow:auto;flex-wrap:nowrap}.top nav a{white-space:nowrap}.hero{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr 1fr}.card.monthly{grid-column:span 2}}
+@media(max-width:700px){.top{padding:12px}.brand{font-size:20px}.top-actions .secondary{display:none}.wrap{padding-top:18px}.hero{grid-template-columns:1fr;gap:16px}.hero-visual{padding:17px}.grid,.codes,.lower{grid-template-columns:1fr}.card.monthly{grid-column:auto}.card{padding:15px}.section-head{align-items:start;flex-direction:column}.code-card{align-items:flex-start}.code-icon{font-size:28px}.steps{grid-template-columns:1fr}.ref-input{flex-direction:column}.footer{padding:15px}.hero h1{letter-spacing:-1.3px}}
+@media(max-width:380px){.fields{grid-template-columns:1fr}.code-card{gap:9px}.code-copy{flex-direction:column}.code-copy button{width:100%}.top-actions .btn{padding:9px 10px}}
+
+.stake-type { min-height: 56px; flex: 1; }
+.stake-type.active { background: linear-gradient(120deg,#00bd86,#009f92); color: #04131b; border-color: #00c994; }
+.copy-inline { float: right; border: 0; background: transparent; color: #13d7ad; font: inherit; font-size: .92em; cursor: pointer; padding: 2px 4px; }
+#stakeMailResult textarea, #stakeMailResult input { width: 100%; }
+#stakeMailResult [hidden] { display: none !important; }
+#stakeMailResult .pill { white-space: nowrap; }
+@media (max-width: 620px) {
+  #stakeMailResult .card-head { flex-wrap: wrap; }
+  #stakeMailResult .hero-actions { flex-direction: column; }
+  #stakeMailResult .hero-actions .btn { width: 100%; }
+  .stake-type { font-size: .9em; padding: 12px 8px; }
+}
+
+
+/* Mobile-friendly hamburger navigation and dark support-ticket fields */
+.top { position: sticky; top: 0; z-index: 1000; }
+.top-actions { display:flex; align-items:center; gap:10px; }
+.menu-toggle { width:48px; height:44px; border:1px solid var(--line,#273247); border-radius:14px; background:var(--panel,#101827); display:flex; flex-direction:column; justify-content:center; align-items:center; gap:5px; cursor:pointer; }
+.menu-toggle span { display:block; width:21px; height:2px; background:var(--text,#edf2ff); border-radius:2px; }
+#mainNav { display:none; position:absolute; top:calc(100% + 1px); right:12px; width:min(290px, calc(100vw - 24px)); padding:10px; border:1px solid var(--line,#273247); border-radius:16px; background:var(--panel,#101827); box-shadow:0 18px 40px rgba(0,0,0,.4); flex-direction:column; gap:3px; }
+#mainNav.open { display:flex; }
+#mainNav a { display:block; padding:12px 14px; border-radius:10px; text-decoration:none; color:var(--text,#edf2ff); }
+#mainNav a:hover { background:rgba(139,92,246,.16); }
+#stakeMailResult input, #stakeMailResult textarea {
+ display:block; box-sizing:border-box; width:100%; color:#e8eefb; background:#050918;
+ border:1px solid #29364e; border-radius:14px; padding:14px; font:inherit;
+ line-height:1.55; color-scheme:dark; resize:vertical;
+}
+#stakeMailResult input[readonly], #stakeMailResult textarea[readonly] { opacity:1; -webkit-text-fill-color:#e8eefb; }
+#stakeMailResult textarea { min-height:90px; white-space:pre-wrap; }
+#stakeMailResult textarea::placeholder { color:#8390a8; }
+#stakeMailResult label { display:block; margin-top:14px; margin-bottom:7px; font-weight:600; }
+#stakeMailResult .card-head label { margin:0; }
+@media(max-width:700px) {
+ .top { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; }
+ .top-actions { gap:7px; }
+ .top-actions .btn { padding:9px 10px; }
+ .menu-toggle { flex-shrink:0; }
+ #mainNav { right:10px; }
+}
+@media(max-width:390px) {
+ .top-actions #loginOpen { display:none; }
+ .top-actions .btn { font-size:13px; }
+}
+
+
+.hero-support-tool {
+  display: block;
+  margin-top: 14px;
+  width: 100%;
+}
+.hero-support-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 54px;
+  gap: 10px;
+  text-align: center;
+  border: 1px solid rgba(139, 92, 246, .55);
+  background: linear-gradient(135deg, rgba(139,92,246,.16), rgba(99,102,241,.12));
+  color: var(--text, #f8fafc);
+  border-radius: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+.hero-support-btn:hover,
+.hero-support-btn:focus-visible {
+  border-color: #a78bfa;
+  box-shadow: 0 0 0 3px rgba(139,92,246,.18);
+}
+
+</style>
+</head>
+<body>
+<header class="top">
+ <div class="brand"><div class="mark">✦</div><div>Bonus<em>Hub</em><small>VIP TOOLS • BONUS CALCULATOR</small></div></div>
+ <div class="top-actions"><button class="btn secondary" id="loginOpen">Login</button><button class="btn" id="signupOpen">Create Account ↗</button><button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
+ <nav id="mainNav" aria-label="Main navigation">
+  <a href="#home">⌂ Home</a><a href="#calculator">▦ Monthly Calculator</a><a href="#weekly">▦ Weekly Calculator</a><a href="#codes">✦ Promo Codes</a><a href="#refer">♧ Refer & Earn</a><a href="#stake-solver">✉ Stake Issues Solver</a><a href="#disclaimer">ⓘ Disclaimer</a>
+ </nav>
+</header>
+<main class="wrap" id="home">
+ <section class="hero">
+  <div><span class="eyebrow"><span class="dot"></span> VIP CALCULATOR • FREE TO USE</span><h1>Know your bonus.<br><span class="shine">Plan smarter.</span></h1><p>Estimate weekly and monthly VIP bonuses, calculate profit or loss, and keep your referral shortcuts in one clean dashboard. Built for mobile and desktop.</p><div class="hero-actions"><a href="#calculator"><button class="btn">Open Calculator ↓</button></a><a href="https://stake.ac/?c=LphZJEQq" target="_blank" rel="noopener noreferrer"><button class="btn secondary">Create Account &amp; Complete $21 Wager &amp; Get Bonus ↗</button></a>
+
+<div id="hero-stake-support" class="hero-support-tool">
+  <a class="btn secondary hero-support-btn" href="#stake-solver">✉ Deposit &amp; Withdrawal Issue</a>
+</div>
+<div id="crypto-deposit-bonus-btn-wrap" class="hero-support-tool" style="margin-top:10px">
+  <a id="crypto-deposit-bonus-btn" class="btn secondary hero-support-btn" href="https://www-stake.online/bonus/" target="_blank" rel="noopener noreferrer">◈ Crypto Deposit Bonus ↗</a>
+</div>
+<p class="small muted" style="margin-top:8px">New-user offers depend on eligibility and current Stake terms; bonus is not guaranteed.</p></div></div>
+  <div class="hero-visual"><div class="visual-top"><b>✧ Bonus overview</b><span class="pill">ESTIMATE ONLY</span></div><div class="muted" style="margin-top:20px;font-size:13px">Example monthly bonus</div><div class="visual-number">₹<span id="heroBonus">7,500</span></div><div class="muted small">Based on sample amount and percentage</div><div class="visual-bar"><span></span></div><div class="visual-bottom"><span>Simple calculations</span><span>Instant results ↗</span></div></div>
+ </section>
+ <div class="section-head" id="calculator"><div><h2>Bonus & Profit Calculators</h2><p>Enter your numbers to see an instant estimate.</p></div><span class="eyebrow">⚡ INSTANT RESULTS</span></div>
+ <section class="grid">
+  <article class="card"><div class="card-head"><div class="ico">↗</div><div><h3>Profit / Loss</h3><p>Check your net result and ROI</p></div></div><div class="fields"><div class="field"><label for="stake">Stake / Cost (₹)</label><input id="stake" type="number" min="0" value="1000"></div><div class="field"><label for="returned">Return (₹)</label><input id="returned" type="number" min="0" value="1500"></div></div><div class="output" id="profitOut"><div class="out-row primary"><span>Net profit</span><strong>₹500</strong></div><div class="out-row"><span>Return on stake</span><strong>150%</strong></div><div class="out-row"><span>ROI</span><strong>50%</strong></div></div><div class="btn-row"><button class="btn" id="profitCalc">Calculate result</button><button class="btn secondary" id="profitReset">Reset</button></div></article>
+  <article class="card weekly"><div class="card-head"><div class="ico">◷</div><div><h3>Weekly Bonus</h3><p>VIP-based community estimate</p></div></div><div class="field"><label for="weekAmount">Wagered amount for last 7 days (₹)</label><input id="weekAmount" type="number" min="0" value="10000"></div><div class="fields"><div class="field"><label for="weekVip">VIP level</label><select id="weekVip"><option value="1">Bronze</option><option value="1.2">Silver</option><option value="1.5" selected>Gold</option><option value="2">Platinum I–III</option><option value="2.6">Platinum IV–VI</option><option value="3.5">Diamond</option><option value="5">Obsidian</option></select></div><div class="field"><label for="weekResult">Weekly result</label><select id="weekResult"><option value="profit">In profit</option><option value="even" selected>Break-even</option><option value="loss">At a loss</option></select></div></div><div class="output" id="weekOut"><div class="out-row primary"><span>Estimated bonus range</span><strong>—</strong></div><div class="out-row"><span>VIP adjustment</span><strong>Applied automatically</strong></div><div class="out-row"><span>Actual bonus</span><strong>May vary</strong></div></div><div class="btn-row"><button class="btn" id="weekCalc">Calculate bonus</button><button class="btn secondary" id="weekReset">Reset</button></div></article>
+  <article class="card monthly"><div class="card-head"><div class="ico">▦</div><div><h3>Monthly Bonus</h3><p>VIP-based community estimate</p></div></div><div class="field"><label for="monthAmount">Wagered amount for last 30 days (₹)</label><input id="monthAmount" type="number" min="0" value="50000"></div><div class="fields"><div class="field"><label for="monthVip">VIP level</label><select id="monthVip"><option value="1">Bronze</option><option value="1.2">Silver</option><option value="1.5" selected>Gold</option><option value="2">Platinum I–III</option><option value="2.6">Platinum IV–VI</option><option value="3.5">Diamond</option><option value="5">Obsidian</option></select></div><div class="field"><label for="monthResult">Monthly result</label><select id="monthResult"><option value="profit">In profit</option><option value="even" selected>Break-even</option><option value="loss">At a loss</option></select></div></div><div class="output" id="monthOut"><div class="out-row primary"><span>Estimated bonus range</span><strong>—</strong></div><div class="out-row"><span>VIP adjustment</span><strong>Applied automatically</strong></div><div class="out-row"><span>Actual bonus</span><strong>May vary</strong></div></div><div class="btn-row"><button class="btn" id="monthCalc">Calculate bonus</button><button class="btn secondary" id="monthReset">Reset</button></div></article>
+ </section>
+ <div class="section-head" id="codes"><div><h2>Promo Code Shortcuts</h2><p>Copy your code in one click. Replace sample codes with your own valid codes.</p></div></div>
+ <section class="codes">
+  <article class="code-card"><div class="code-icon">♠</div><div class="code-main"><h3>Stake</h3><p>Promo / referral code</p><div class="code-copy"><code id="stakeCode">LphZJEQq</code><button class="btn green" data-copy="stakeCode">▣ Copy code</button><a class="btn secondary" href="https://stake.ac/?c=LphZJEQq" target="_blank" rel="noopener noreferrer" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">↗ Referral link</a></div></div></article>
+  <article class="code-card roobet"><div class="code-icon">◉</div><div class="code-main"><h3>Roobet</h3><p>Promo / referral code</p><div class="code-copy"><code id="roobetCode">Roobet144</code><button class="btn gold" data-copy="roobetCode">▣ Copy code</button><a class="btn secondary" href="https://roobet.com/sports/bets" target="_blank" rel="noopener noreferrer" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">↗ Roobet link</a></div></div></article>
+ </section>
+ <section class="lower">
+  <article class="card ref-card" id="refer"><div class="card-head"><div class="ico">♧</div><div><h3>Refer & Earn</h3><p>Share a referral link with friends</p></div></div><label for="refLink">Your referral link</label><div class="ref-input"><input id="refLink" readonly value="https://stake.ac/?c=LphZJEQq"><button class="btn" id="copyRef">Copy referral link</button></div><div class="steps"><div class="step"><span>1</span><b>Share your link</b><small>Send it to a friend</small></div><div class="step"><span>2</span><b>They sign up</b><small>Using your referral</small></div><div class="step"><span>3</span><b>Reward review</b><small>Follow your terms</small></div></div><p class="small">Share your Stake referral link. Any referral reward or commission depends on Stake’s official terms and qualifying activity; we cannot verify account creation or track commissions from this page alone.</p></article>
+  <article class="card"><div class="card-head"><div class="ico">✦</div><div><h3>Built for quick use</h3><p>Simple, responsive and easy to navigate</p></div></div><ul class="checklist"><li>Weekly and monthly bonus estimates</li><li>Profit, loss and ROI calculation</li><li>One-tap code and link copying</li><li>Mobile-friendly responsive layout</li><li>Optional demo login without OTP</li><li>18+ risk disclosure</li></ul><div class="disclaimer" id="disclaimer"><b>18+ ONLY • PLEASE READ</b><br>Online gambling involves financial risk and may be addictive. These are unofficial estimates, not official bonus terms or guaranteed earnings. Check operator rules and local laws. Play responsibly.</div></article>
+ </section>
+
+
+ 
+<section class="section" id="stake-solver">
+ <div class="section-head">
+  <div>
+   <span class="eyebrow">◎ INR PAYMENT SUPPORT FORMATTER</span>
+   <h2>Stake Issues Solver</h2>
+   <p class="muted">Experiencing an INR deposit or withdrawal delay? Generate a structured support ticket formatted for your issue.</p>
+  </div>
+  <span class="pill">FREE TOOL</span>
+ </div>
+ <div class="grid two">
+  <article class="card">
+   <div class="card-head">
+    <div class="ico">▤</div>
+    <div><h3>Issue Details Form</h3><p>Enter your transaction details below.</p></div>
+    <button class="btn secondary" type="button" id="stakeIssueReset">↺ Clear Form</button>
+   </div>
+   <form id="stakeIssueForm">
+    <label>SELECT ISSUE TYPE *</label>
+    <div class="fields" role="group" aria-label="Select issue type">
+     <button class="btn stake-type active" type="button" data-issue="deposit" aria-pressed="true">↙ INR Deposit Issue</button>
+     <button class="btn stake-type secondary" type="button" data-issue="withdrawal" aria-pressed="false">↗ INR Withdraw Issue</button>
+    </div>
+    <input type="hidden" id="stakeIssueType" value="deposit">
+
+    <label for="stakeAmount">Amount (INR) * <span class="muted">e.g. 5000</span></label>
+    <input id="stakeAmount" type="number" min="1" max="100000000" step="0.01" placeholder="₹ Enter amount in ₹" required>
+
+    <label for="stakeTransactionId">Stake Transaction ID * <span class="muted" id="stakeTxnCount">0/10 digits</span></label>
+    <input id="stakeTransactionId" inputmode="numeric" autocomplete="off" maxlength="10" pattern="[0-9]{10}" placeholder="10-digit numeric ID" required>
+
+    <label for="stakeDate">Transaction Date * <span class="muted" id="stakeDateLabel"></span></label>
+    <input id="stakeDate" type="date" required>
+
+    <div id="stakeUtrWrap">
+     <label for="stakeUtr">Bank UTR Number * <span class="muted" id="stakeUtrCount">0/12 digits</span></label>
+     <input id="stakeUtr" inputmode="numeric" autocomplete="off" maxlength="12" pattern="[0-9]{12}" placeholder="12-digit numeric UTR" required>
+     <div class="disclaimer">
+      <b>⚠ MANDATORY STEP</b><br>
+      Attach your payment screenshot with the email, then send it.<br>
+      <span class="muted">The screenshot should show the relevant debit reference, date, and UTR. Hide unrelated personal or banking details.</span>
+     </div>
+    </div>
+    <button class="btn" type="submit">➤ GENERATE MAIL FORMAT</button>
+   </form>
+  </article>
+
+  <article class="card" id="stakeMailResult" aria-live="polite">
+   <div class="card-head">
+    <div class="ico">✉</div>
+    <div><h3>Generated Support Ticket</h3><p>Review all details before sending.</p></div>
+    <span class="pill" id="stakeReadyBadge">Waiting for details</span>
+   </div>
+
+   <label for="stakeEmailTo">To Email: <button class="copy-inline" type="button" data-copy="stakeEmailTo">▢ Copy</button></label>
+   <input id="stakeEmailTo" value="payments@stake.com" readonly>
+
+   <label for="stakeEmailSubject">Subject: <button class="copy-inline" type="button" data-copy="stakeEmailSubject">▢ Copy</button></label>
+   <textarea id="stakeEmailSubject" rows="2" readonly placeholder="Generated subject will appear here"></textarea>
+
+   <label for="stakeEmailBody">Mail Format (Body): <button class="copy-inline" type="button" data-copy="stakeEmailBody">▢ Copy Entire Body</button></label>
+   <textarea id="stakeEmailBody" rows="14" readonly placeholder="Complete the form and tap Generate Mail Format."></textarea>
+
+   <div class="hero-actions">
+    <button class="btn" type="button" id="stakeCopyAll">▢ COPY ENTIRE TICKET</button>
+    <a class="btn secondary" id="stakeMailto" href="mailto:payments@stake.com">↗ OPEN IN DEFAULT MAIL CLIENT</a>
+   </div>
+   <p class="small muted">This tool only prepares a draft; it does not send email or verify a transaction. Verify the current support email and instructions through Stake’s official Help Centre before sending.</p>
+  </article>
+ </div>
+</section>
+
+
+
+</main>
+<footer class="footer"><span><b>18+ DISCLAIMER:</b> For adults only. No bonus or winnings are guaranteed.</span><span>BonusHub • Your bonus companion</span></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-box"><button class="btn secondary x" id="closeModal" aria-label="Close">✕</button><h2 id="modalTitle">Create Account</h2><p class="small">Create your account with your username, email, mobile number and password. No OTP is requested here.</p><form id="authForm"><div class="field"><label for="username">Username</label><input id="username" required minlength="3" maxlength="24" autocomplete="username" placeholder="Choose username"></div><div class="field" id="signupEmailField"><label for="email">Email address</label><input id="email" type="email" required autocomplete="email" placeholder="you@example.com"></div><div class="field"><label for="mobile">Mobile number</label><input id="mobile" type="tel" required inputmode="numeric" pattern="[0-9+() -]{8,18}" autocomplete="tel" placeholder="Enter mobile number"></div><div class="field"><label for="password">Password</label><input id="password" type="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters"></div><button class="btn full" id="authSubmit">Create Account</button></form><div style="display:flex;justify-content:flex-end;margin-top:10px"><button type="button" id="forgotPassword" style="background:none;border:0;color:#c5a0ff;padding:4px 0;font-size:13px;font-weight:700">Forgot Password?</button></div><p class="small" id="authMessage"></p></div></div>
+<script>
+const $=id=>document.getElementById(id);const money=n=>'₹'+Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2});
+function toast(s){let t=$('toast');t.textContent=s;t.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display='none',2400)}
+async function copy(s){try{await navigator.clipboard.writeText(s)}catch(e){let x=document.createElement('textarea');x.value=s;document.body.append(x);x.select();document.execCommand('copy');x.remove()}toast('Copied!')}
+document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=()=>copy($(b.dataset.copy).textContent.trim()));$('copyRef').onclick=() => copy($('refLink').value);
+function profit(){let a=Math.max(0,+$('stake').value||0),b=Math.max(0,+$('returned').value||0),d=b-a,roi=a?d/a*100:0;$('profitOut').innerHTML=`<div class="out-row primary"><span>${d>=0?'Net profit':'Net loss'}</span><strong style="color:${d>=0?'var(--green)':'var(--red)'}">${d<0?'−':''}${money(Math.abs(d))}</strong></div><div class="out-row"><span>Return on stake</span><strong>${a?(b/a*100).toFixed(2)+'%':'—'}</strong></div><div class="out-row"><span>ROI</span><strong>${a?roi.toFixed(2)+'%':'—'}</strong></div>`}
+function bonus(prefix,out){
+ let amount=Math.max(0,+$(prefix+'Amount').value||0),vip=+$(prefix+'Vip').value||1,result=$(prefix+'Result').value;
+ // Illustrative community model only, not an official Stake formula.
+ let period=prefix==='week'?0.0007:0.0018;
+ let resultFactor=result==='loss'?1.35:(result==='profit'?0.8:1);
+ let mid=amount*period*vip*resultFactor,low=mid*0.8,high=mid*1.2;
+ $(out).innerHTML=`<div class="out-row primary"><span>Estimated bonus range</span><strong>${money(low)} – ${money(high)}</strong></div><div class="out-row"><span>VIP adjustment</span><strong>${vip.toFixed(1)}× applied</strong></div><div class="out-row"><span>Midpoint estimate</span><strong>${money(mid)}</strong></div><div class="small" style="margin-top:7px">Unofficial estimate; actual bonus may differ or be unavailable.</div>`;
+ if(prefix==='month')$('heroBonus').textContent=Math.round(mid).toLocaleString('en-IN');
+}
+$('profitCalc').onclick=profit;$('profitReset').onclick=()=>{$('stake').value=1000;$('returned').value=1500;profit()};
+$('weekCalc').onclick=()=>bonus('week','weekOut');$('weekReset').onclick=()=>{$('weekAmount').value=10000;$('weekVip').value='1.5';$('weekResult').value='even';bonus('week','weekOut')};
+$('monthCalc').onclick=()=>bonus('month','monthOut');$('monthReset').onclick=()=>{$('monthAmount').value=50000;$('monthVip').value='1.5';$('monthResult').value='even';bonus('month','monthOut')};
+bonus('week','weekOut');bonus('month','monthOut');
+let mode='signup';function users(){try{return JSON.parse(localStorage.getItem('bonushub_demo')||'{}')}catch(e){return {}}}
+function openModal(m){
+ mode=m;$('authModal').style.display='grid';
+ $('modalTitle').textContent=m==='signup'?'Create Account':'Login to Your Account';
+ $('authSubmit').textContent=m==='signup'?'Create Account':'Login';
+ $('authMessage').textContent='';$('username').value='';$('password').value='';
+ $('signupEmailField').classList.toggle('hide',m!=='signup');
+ $('mobile').parentElement.classList.toggle('hide',m!=='signup');
+ $('forgotPassword').classList.toggle('hide',m!=='login');
+ $('username').placeholder=m==='signup'?'Choose username':'Enter username';
+ $('password').autocomplete=m==='signup'?'new-password':'current-password';
+ const intro=document.querySelector('#authModal .modal-box > p.small');
+ if(intro)intro.textContent=m==='signup'?'Create your account with username, email, mobile number and password. No OTP is requested.':'Enter your username and password to log in.';
+}
+function closeModal(){$('authModal').style.display='none'}
+$('signupOpen').onclick=()=>openModal('signup');$('loginOpen').onclick=()=>openModal('login');$('closeModal').onclick=closeModal;$('authModal').onclick=e=>{if(e.target===$('authModal'))closeModal()};
+$('forgotPassword').onclick=()=>{const u=$('username').value.trim();if(!u){$('authMessage').textContent='Enter your username first. Password recovery needs a verified email/mobile reset service.';return}const db=users();$('authMessage').textContent=db[u]?'For security, password reset must use a verified email/mobile recovery service. That service is not connected yet.':'No account with this username was found in this browser. Try the browser where you signed up, or create a new account.'};
+$('authForm').onsubmit=e=>{
+ e.preventDefault();
+ const u=$('username').value.trim(),p=$('password').value,db=users();
+ if(!u||!p){$('authMessage').textContent='Please enter your username and password.';return}
+ if(mode==='signup'){
+   const email=$('email').value.trim().toLowerCase(),mobile=$('mobile').value.trim();
+   if(u.length<3){$('authMessage').textContent='Username must be at least 3 characters.';return}
+   if(!email||!$('email').checkValidity()){$('authMessage').textContent='Please enter a valid email address.';return}
+   if(!mobile||!$('mobile').checkValidity()){$('authMessage').textContent='Please enter a valid mobile number.';return}
+   if(p.length<8){$('authMessage').textContent='Password must be at least 8 characters.';return}
+   if(db[u]){$('authMessage').textContent='This username already exists in this browser. Choose another.';return}
+   db[u]={password:p,email,mobile};localStorage.setItem('bonushub_demo',JSON.stringify(db));sessionStorage.setItem('bonushub_user',u);
+   $('authMessage').textContent='Account created successfully. You are now logged in.';toast('Welcome, '+u);setTimeout(closeModal,700);
+ }else{
+   const record=db[u],valid=(typeof record==='string'?record===p:(record&&record.password===p));
+   if(!valid){$('authMessage').textContent='Incorrect username or password. If you have not signed up on this browser yet, create an account first.';return}
+   sessionStorage.setItem('bonushub_user',u);toast('Login successful. Welcome back, '+u);closeModal();
+ }
+};
+
+const stakeReferralUrl='https://stake.ac/?c=LphZJEQq';$('refLink').value=stakeReferralUrl;
+
+
+
+// Stake Issues Solver: generate a support-ticket draft locally in the browser.
+(function () {
+  const form = document.getElementById('stakeIssueForm');
+  if (!form) return;
+  const $ = id => document.getElementById(id);
+  const typeButtons = Array.from(document.querySelectorAll('.stake-type'));
+  const today = new Date();
+  const todayIso = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  $('stakeDate').value = todayIso;
+  $('stakeDate').max = todayIso;
+  $('stakeDateLabel').textContent = todayIso;
+
+  function setType(type) {
+    $('stakeIssueType').value = type;
+    typeButtons.forEach(button => {
+      const active = button.dataset.issue === type;
+      button.classList.toggle('active', active);
+      button.classList.toggle('secondary', !active);
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+    const deposit = type === 'deposit';
+    $('stakeUtrWrap').hidden = !deposit;
+    $('stakeUtr').required = deposit;
+    $('stakeUtr').disabled = !deposit;
+  }
+  typeButtons.forEach(button => button.addEventListener('click', () => setType(button.dataset.issue)));
+
+  $('stakeTransactionId').addEventListener('input', function () {
+    this.value = this.value.replace(/\D/g, '').slice(0, 10);
+    $('stakeTxnCount').textContent = this.value.length + '/10 digits';
+  });
+  $('stakeUtr').addEventListener('input', function () {
+    this.value = this.value.replace(/\D/g, '').slice(0, 12);
+    $('stakeUtrCount').textContent = this.value.length + '/12 digits';
+  });
+  $('stakeDate').addEventListener('change', function () {
+    $('stakeDateLabel').textContent = this.value;
+  });
+
+  function makeDraft() {
+    const type = $('stakeIssueType').value;
+    const amount = Number($('stakeAmount').value);
+    const amountText = new Intl.NumberFormat('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(amount);
+    const transactionId = $('stakeTransactionId').value.trim();
+    const date = $('stakeDate').value;
+    const utr = $('stakeUtr').value.trim();
+    const deposit = type === 'deposit';
+    const issue = deposit ? 'INR Deposit Issue' : 'INR Withdrawal Issue';
+    const subject = (deposit ? 'Deposit' : 'Withdraw') + ' Issue (Transaction ID: ' + transactionId + ')';
+    const body = deposit
+      ? 'Dear Stake Support Team,\n\n' +
+        'I am writing to report an issue regarding an INR deposit to my Stake account.\n\n' +
+        'The amount appears to have been debited from my bank account, but the deposit has not been credited to my Stake wallet.\n\n' +
+        'Transaction Details:\n' +
+        '• Issue Type: ' + issue + '\n' +
+        '• Amount: ₹' + amountText + ' INR\n' +
+        '• Date: ' + date + '\n' +
+        '• Transaction ID: ' + transactionId + '\n' +
+        '• Bank UTR Number: ' + utr + '\n\n' +
+        'I have attached the relevant payment screenshot for reference. Kindly investigate this transaction with the payment processor and help credit the amount to my Stake wallet, or advise me on the next steps.\n\n' +
+        'Thank you for your assistance.'
+      : 'Dear Stake Support Team,\n\n' +
+        'I am writing to report an issue regarding a pending INR withdrawal from my Stake account.\n\n' +
+        'The withdrawal request appears as processed in my Stake transaction history, but the funds have not been received in my designated bank account.\n\n' +
+        'Transaction Details:\n' +
+        '• Issue Type: ' + issue + '\n' +
+        '• Amount: ₹' + amountText + ' INR\n' +
+        '• Date: ' + date + '\n' +
+        '• Transaction ID: ' + transactionId + '\n\n' +
+        'Kindly investigate this withdrawal with the banking processor and advise whether the funds are still being processed or if any further information is required. If the transaction failed, please explain the available resolution options.\n\n' +
+        'Thank you for your assistance.';
+    return { subject, body };
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+    const transactionId = $('stakeTransactionId').value.trim();
+    const utr = $('stakeUtr').value.trim();
+    if (!/^\d{10}$/.test(transactionId)) {
+      $('stakeTransactionId').setCustomValidity('Enter exactly 10 digits.');
+      $('stakeTransactionId').reportValidity();
+      $('stakeTransactionId').setCustomValidity('');
+      return;
+    }
+    if ($('stakeIssueType').value === 'deposit' && !/^\d{12}$/.test(utr)) {
+      $('stakeUtr').setCustomValidity('Enter exactly 12 digits.');
+      $('stakeUtr').reportValidity();
+      $('stakeUtr').setCustomValidity('');
+      return;
+    }
+    const draft = makeDraft();
+    $('stakeEmailSubject').value = draft.subject;
+    $('stakeEmailBody').value = draft.body;
+    $('stakeReadyBadge').textContent = 'Ready to Review';
+    $('stakeMailto').href = 'mailto:payments@stake.com?subject=' +
+      encodeURIComponent(draft.subject) + '&body=' + encodeURIComponent(draft.body);
+    $('stakeMailResult').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  async function copyValue(id, button) {
+    const field = $(id);
+    const value = field.value || field.textContent || '';
+    if (!value.trim()) {
+      alert('Generate the mail format first.');
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(value);
+      const oldText = button.textContent;
+      button.textContent = '✓ Copied';
+      setTimeout(() => { button.textContent = oldText; }, 1500);
+    } catch (error) {
+      field.focus();
+      field.select();
+      alert('Automatic copy is unavailable in this browser. The text is selected; copy it manually.');
+    }
+  }
+  document.querySelectorAll('[data-copy]').forEach(button => {
+    button.addEventListener('click', () => copyValue(button.dataset.copy, button));
+  });
+  $('stakeCopyAll').addEventListener('click', async function () {
+    if (!$('stakeEmailSubject').value || !$('stakeEmailBody').value) {
+      alert('Generate the mail format first.');
+      return;
+    }
+    const all = 'To: ' + $('stakeEmailTo').value +
+      '\nSubject: ' + $('stakeEmailSubject').value +
+      '\n\n' + $('stakeEmailBody').value;
+    try {
+      await navigator.clipboard.writeText(all);
+      this.textContent = '✓ TICKET COPIED';
+      setTimeout(() => { this.textContent = '▢ COPY ENTIRE TICKET'; }, 1500);
+    } catch (error) {
+      $('stakeEmailBody').focus();
+      $('stakeEmailBody').select();
+      alert('Automatic copy is unavailable. Copy the selected body and the subject separately.');
+    }
+  });
+  $('stakeIssueReset').addEventListener('click', function () {
+    form.reset();
+    setType('deposit');
+    $('stakeDate').value = todayIso;
+    $('stakeDateLabel').textContent = todayIso;
+    $('stakeTxnCount').textContent = '0/10 digits';
+    $('stakeUtrCount').textContent = '0/12 digits';
+    $('stakeEmailTo').value = 'payments@stake.com';
+    $('stakeEmailSubject').value = '';
+    $('stakeEmailBody').value = '';
+    $('stakeReadyBadge').textContent = 'Waiting for details';
+    $('stakeMailto').href = 'mailto:payments@stake.com';
+  });
+  setType('deposit');
+})();
+
+
+// Hamburger menu: Home, calculators, and site sections are grouped in the three-line menu.
+(function () {
+ const toggle = document.getElementById('menuToggle');
+ const nav = document.getElementById('mainNav');
+ if (!toggle || !nav) return;
+ toggle.addEventListener('click', function () {
+   const isOpen = nav.classList.toggle('open');
+   toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+   toggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+ });
+ nav.querySelectorAll('a').forEach(link => link.addEventListener('click', function () {
+   nav.classList.remove('open');
+   toggle.setAttribute('aria-expanded', 'false');
+   toggle.setAttribute('aria-label', 'Open navigation menu');
+ }));
+ document.addEventListener('click', function (event) {
+   if (!nav.contains(event.target) && !toggle.contains(event.target)) {
+     nav.classList.remove('open');
+     toggle.setAttribute('aria-expanded', 'false');
+   }
+ });
+})();
+
+</script>
+</body></html>
